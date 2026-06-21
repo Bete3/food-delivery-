@@ -1,32 +1,30 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 
-// Load environment variables
-
-// Connect to MongoDB Atlas
-connectDB();
+dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 5000;
+const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 
-// Middleware
-app.use(cors()); // Allows your Next.js frontend to talk to this API safely
-app.use(express.json()); // Parses incoming JSON payloads
+app.use(cors({ origin: clientOrigin }));
+app.use(express.json());
 
-// Routes Middleware
-app.use('/api/auth', authRoutes);
-
-// Base Check Route
-app.get('/', (req, res) => {
-  res.send('API is running beautifully... ✨');
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
 });
 
-const PORT = process.env.PORT || 5000;
+app.use('/api/auth', authRoutes);
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server skipping along on port http://localhost:${PORT}`);
+app.use((req, res) => {
+  res.status(404).json({ message: `Route ${req.originalUrl} not found` });
+});
+
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
 });

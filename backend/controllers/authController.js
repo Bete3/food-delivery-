@@ -11,7 +11,13 @@ const generateToken = (id) => {
 // @desc    Register a new user
 // @route   POST /api/auth/signup
 export const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const name = req.body?.name?.trim();
+  const email = req.body?.email?.trim().toLowerCase();
+  const password = req.body?.password;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Please provide name, email, and password' });
+  }
 
   try {
     // Check if user already exists
@@ -41,7 +47,12 @@ export const registerUser = async (req, res) => {
 // @desc    Authenticate user & get token
 // @route   POST /api/auth/login
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const email = req.body?.email?.trim().toLowerCase();
+  const password = req.body?.password;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide email and password' });
+  }
 
   try {
     // Find user by email
