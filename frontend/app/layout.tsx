@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Food Delivery Signup",
-  description: "Sign up for the food delivery app",
+  title: "Food Delivery Auth",
+  description: "Sign in or create an account for the food delivery app",
 };
 
 export default function RootLayout({

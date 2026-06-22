@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
@@ -120,7 +121,7 @@ export default function SignupForm() {
         <div className="w-full max-w-md space-y-8 relative z-10">
           <div className="space-y-2">
             <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Create an account ✨</h1>
-            <p className="text-sm text-slate-500">Let's get you set up in less than 60 seconds.</p>
+            <p className="text-sm text-slate-500">Let&apos;s get you set up in less than 60 seconds.</p>
           </div>
 
           {error && (
@@ -183,6 +184,10 @@ export default function SignupForm() {
               {loading ? "Creating your account..." : "Get Started 🚀"}
             </button>
           </form>
+
+          <p className="text-center text-xs text-slate-400">
+            Or jump straight to the dedicated <Link href="/login" className="font-semibold text-secondary hover:underline underline-offset-4">login page</Link>.
+          </p>
         </div>
       </div>
     </div>
