@@ -73,3 +73,70 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+
+// @desc    Get current user profile
+// @route   GET /api/auth/profile
+export const getUserProfile = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Not authorized' });
+  }
+
+  return res.json({
+    _id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+  });
+};
+
+// @desc    Update current user profile
+// @route   PUT /api/auth/profile
+export const updateUserProfile = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Not authorized' });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  const nextName = req.body?.name?.trim();
+  const nextEmail = req.body?.email?.trim().toLowerCase();
+  const nextPassword = req.body?.password;
+
+  if (nextEmail && nextEmail !== user.email) {
+    const emailExists = await User.findOne({ email: nextEmail });
+    if (emailExists) {
+      return res.status(400).json({ message: 'Email is already in use' });
+    }
+    user.email = nextEmail;
+  }
+
+  if (nextName) {
+    user.name = nextName;
+  }
+
+  if (nextPassword) {
+    user.password = nextPassword;
+  }
+
+  const updatedUser = await user.save();
+
+  return res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    token: generateToken(updatedUser._id),
+  });
+};
+
+// @desc    Get total number of registered users
+// @route   GET /api/auth/users/count
+export const getUserCount = async (_req, res) => {
+  try {
+    const count = await User.countDocuments();
+    return res.json({ count });
+  } catch (error) {
+    return res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};
