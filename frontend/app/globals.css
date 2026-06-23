@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #000000;   /* Black */
-  --secondary: #ffffff; /* White */
+  --primary: #ff7a45;   /* Warm primary from landing page */
+  --primary-soft: rgba(255, 122, 69, 0.14);
+  --secondary: #fff7f1; /* Warm page background */
 }
 
 body {

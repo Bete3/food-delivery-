@@ -84,20 +84,20 @@ export default function SignupForm() {
       <div
         className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-between relative overflow-hidden"
         style={{
-          backgroundImage: "linear-gradient(135deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03), rgba(255,255,255,0.95))",
+          backgroundImage: "linear-gradient(135deg, rgba(255,122,69,0.12), rgba(255,122,69,0.06), rgba(255,255,255,0.95))",
         }}
       >
         <div className="absolute top-1/4 -left-10 w-72 h-72 rounded-full blur-3xl animate-pulse bg-black/15" />
         <div className="absolute bottom-1/4 right-0 w-60 h-60 rounded-full blur-3xl bg-black/10" />
 
         <div className="flex items-center gap-2 relative z-10">
-          <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center shadow-md shadow-black/20">
+          <div className="w-10 h-10 bg-[var(--primary)] rounded-xl flex items-center justify-center shadow-md shadow-[rgba(255,122,69,0.18)]">
             <span className="text-white text-xl font-bold">✨</span>
           </div>
           <span className="font-bold text-lg text-slate-800 tracking-tight">YourBrand</span>
         </div>
 
-        <div className="max-w-md my-auto relative z-10 space-y-6">
+          <div className="max-w-md my-auto relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-sm border border-black/10 shadow-sm text-xs font-semibold text-black">
             <span>🎉</span> Join over 10,000+ happy humans
           </div>
@@ -179,7 +179,7 @@ export default function SignupForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-4 py-3.5 bg-black hover:bg-slate-800 text-white font-semibold rounded-2xl shadow-lg shadow-black/20 transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-4 py-3.5 bg-[var(--primary)] hover:opacity-95 text-white font-semibold rounded-2xl shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating your account..." : "Get Started 🚀"}
             </button>

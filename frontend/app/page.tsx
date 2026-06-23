@@ -1,5 +1,5 @@
-import SignupForm from "@/components/signup";
+import LandingPage from "@/components/landing-page";
 
 export default function HomePage() {
-  return <SignupForm />;
+  return <LandingPage />;
 }
