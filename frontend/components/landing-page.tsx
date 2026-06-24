@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import OrderForm from "@/components/OrderForm";
 
 const services = [
   {
@@ -22,6 +23,7 @@ const navItems = ["Home", "Menu", "Services", "About Us", "Blog", "Contact"];
 
 export default function LandingPage() {
   const [foods, setFoods] = useState<any[]>([]);
+  const [showOrderForm, setShowOrderForm] = useState(false);
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -49,61 +51,78 @@ export default function LandingPage() {
         } as React.CSSProperties
       }
     >
-      <section className="overflow-hidden bg-[linear-gradient(180deg,#fff4ef_0%,#fff8f4_68%,#ffffff_100%)]">
-        <div className="mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-8 lg:px-10">
-          <header className="flex items-center justify-between gap-6 rounded-full bg-white/55 px-5 py-3 shadow-[0_18px_50px_-32px_rgba(255,122,69,0.45)] backdrop-blur">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-black tracking-tight text-white shadow-[0_12px_25px_-12px_rgba(255,122,69,0.85)]">
-                FD
-              </span>
-              <span className="hidden text-xs font-bold uppercase tracking-[0.4em] text-slate-500 sm:block">
-                Food City
-              </span>
-            </Link>
+      <section className="relative overflow-hidden">
+  {/* Background Video */}
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="absolute inset-0 h-full w-full object-cover"
+  >
+    <source src="/video/video1.mp4" type="video/mp4" />
+  </video>
 
-            <nav className="hidden items-center gap-7 text-sm text-slate-500 lg:flex">
-              {navItems.map((item, index) => (
-                <a
-                  key={item}
-                  href="#menu"
-                  className={`transition-colors hover:text-[var(--primary)] ${
-                    index === 0 ? "text-[var(--primary)]" : ""
-                  }`}
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/50"></div>
 
-            <div className="flex items-center gap-3">
-              <Link
-                href="/signup"
-                className="hidden rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.8)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
-              >
-                Sign Up
-              </Link>
-              <Link
-                href="/login"
-                className="rounded-full border border-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)] hover:text-white"
-              >
-                Log In
-              </Link>
-            </div>
-          </header>
+  {/* Content */}
+  <div className="relative z-10 mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-8 lg:px-10">
+    <header className="flex items-center justify-between gap-6 rounded-full bg-white/10 px-5 py-3 backdrop-blur-md">
+      <Link href="/" className="flex items-center gap-2">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-black tracking-tight text-white shadow-[0_12px_25px_-12px_rgba(255,122,69,0.85)]">
+          FD
+        </span>
+        <span className="hidden text-xs font-bold uppercase tracking-[0.4em] text-white sm:block">
+          Food City
+        </span>
+      </Link>
 
-          <div className="grid items-center gap-12 pb-8 pt-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:pt-16">
-            <div className="max-w-2xl space-y-8">
-              <h1 className="max-w-xl text-5xl font-black leading-[0.95] tracking-[-0.04em] text-slate-950 sm:text-6xl lg:text-[4.4rem]">
-                Instant Food, for Instant Hunger
-              </h1>
+      <nav className="hidden items-center gap-7 text-sm text-white lg:flex">
+        {navItems.map((item, index) => (
+          <a
+            key={item}
+            href="#menu"
+            className={`transition-colors hover:text-[var(--primary)] ${
+              index === 0 ? "text-[var(--primary)]" : ""
+            }`}
+          >
+            {item}
+          </a>
+        ))}
+      </nav>
 
-              <p className="max-w-xl text-base leading-8 text-slate-500 sm:text-lg">
-                Retail food delivery is a courier service where a restaurant delivers food quickly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div className="flex items-center gap-3">
+        <Link
+          href="/signup"
+          className="hidden rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.8)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+        >
+          Sign Up
+        </Link>
+
+        <Link
+          href="/login"
+          className="rounded-full border border-white px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-black"
+        >
+          Log In
+        </Link>
+      </div>
+    </header>
+
+    <div className="grid items-center gap-12 pb-8 pt-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:pt-16">
+      <div className="max-w-2xl space-y-8">
+        <h1 className="max-w-xl text-5xl font-black leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.4rem]">
+          Instant Food, for Instant Hunger
+        </h1>
+
+        <p className="max-w-xl text-base leading-8 text-gray-200 sm:text-lg">
+          Retail food delivery is a courier service where a restaurant
+          delivers food quickly.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* MENU SECTION (FIXED STRUCTURE ONLY) */}
       <section id="menu" className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
@@ -160,9 +179,12 @@ export default function LandingPage() {
 
                 <button
                   type="button"
-                  className="rounded-xl bg-[var(--primary)] px-4 py-2 text-xs font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.95)] transition-transform hover:-translate-y-0.5"
+                  onClick={() => {
+                    setShowOrderForm(true)
+                  }}
+                  className="cursor-pointer rounded-xl bg-[var(--primary)] px-4 py-2 text-xs font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.95)] transition-transform hover:-translate-y-0.5"
                 >
-                  Add to Cart
+                  Order Now
                 </button>
               </div>
             </article>
@@ -191,6 +213,20 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      {showOrderForm && (
+<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">    <div className="relative w-full max-w-4xl">
+      
+      <button
+        onClick={() => setShowOrderForm(false)}
+        className="absolute right-4 top-4 z-50 text-white"
+      >
+        ✕
+      </button>
+
+      <OrderForm />
+    </div>
+  </div>
+)}
     </main>
   );
 }

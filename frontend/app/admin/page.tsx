@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AdminBoard from "@/components/admin-board";
+import AdminBoard from "@/components/admin/admin-board";
 
 export const metadata: Metadata = {
   title: "Food Delivery Admin",
