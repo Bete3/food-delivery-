@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 
-export default function OrderForm() {
+export default function OrderForm({ food }: { food: any }) {
   const [formData, setFormData] = useState({
     amount: "",
     name: "",
     number: "",
     address: "",
+    foodName: food?.name || "",
+    foodImage: food?.imageUrl || "",
   });
 
   const handleChange = (
@@ -28,17 +30,17 @@ export default function OrderForm() {
       body: JSON.stringify(formData),
     });
 
-    setFormData({ amount: "", name: "", number: "", address: "" });
+    setFormData({ amount: "", name: "", number: "", address: "", foodName: "", foodImage: "" });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--secondary)] px-4">
+    <div className="min-h-screen flex items-center justify-center  px-4">
       {/* Soft glowing background blobs */}
       <div className="absolute top-10 left-10 h-40 w-40 rounded-full bg-[var(--primary)] opacity-10 blur-3xl" />
       <div className="absolute bottom-10 right-10 h-52 w-52 rounded-full bg-[var(--primary)] opacity-10 blur-3xl" />
 
       {/* Card */}
-      <div className="relative w-full max-w-lg rounded-3xl bg-white/80 backdrop-blur-xl shadow-2xl border border-white p-8">
+      <div className="relative w-full max-w-lg rounded-3xl  backdrop-blur-xl shadow-2xl border border-white p-8">
         
         {/* Header */}
         <div className="text-center mb-8">

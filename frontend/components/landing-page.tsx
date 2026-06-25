@@ -24,6 +24,7 @@ const navItems = ["Home", "Menu", "Services", "About Us", "Blog", "Contact"];
 export default function LandingPage() {
   const [foods, setFoods] = useState<any[]>([]);
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const [selectedFood, setSelectedFood] = useState<any>(null);
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -173,14 +174,15 @@ export default function LandingPage() {
                   {item.name}
                 </h3>
 
-                <div className="text-2xl font-black text-slate-950">
-                  ${item.amount}
+                <div className="text-lg font-black text-slate-950">
+                  {item.amount} ETB
                 </div>
 
                 <button
                   type="button"
                   onClick={() => {
-                    setShowOrderForm(true)
+                    setSelectedFood(item);
+                    setShowOrderForm(true);
                   }}
                   className="cursor-pointer rounded-xl bg-[var(--primary)] px-4 py-2 text-xs font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.95)] transition-transform hover:-translate-y-0.5"
                 >
@@ -223,7 +225,7 @@ export default function LandingPage() {
         ✕
       </button>
 
-      <OrderForm />
+      <OrderForm food={selectedFood} />
     </div>
   </div>
 )}

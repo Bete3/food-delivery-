@@ -1,9 +1,9 @@
-import OrderForm from "@/components/OrderForm";
+"use client";
 
-export default function OrderPage() {
+export default function OrderForm() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[var(--secondary)] p-6">
-      <OrderForm />
-    </main>
+    <div>
+      Order Form
+    </div>
   );
 }
