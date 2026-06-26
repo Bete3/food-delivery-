@@ -1,52 +1,82 @@
-import Food from '../models/food.js';
+import Food from '../models/food.js';  // Make sure this path is correct
 
-const getBaseUrl = (req) => `${req.protocol}://${req.get('host')}`;
-
+// Create a new food
 export const createFood = async (req, res) => {
-  const name = req.body?.name?.trim();
-  const amountValue = req.body?.amount;
-  const imageUrlFromBody = req.body?.imageUrl?.trim();
-
-  if (!name || amountValue === undefined || amountValue === null || amountValue === '') {
-    return res.status(400).json({ message: 'Please provide food name and amount' });
-  }
-
-  const amount = Number(amountValue);
-  if (Number.isNaN(amount) || amount < 0) {
-    return res.status(400).json({ message: 'Amount must be a valid number' });
-  }
-
-  let imageUrl = imageUrlFromBody;
-  let imageFilename = '';
-
-  if (req.file) {
-    imageFilename = req.file.filename;
-    imageUrl = `${getBaseUrl(req)}/uploads/${req.file.filename}`;
-  }
-
-  if (!imageUrl) {
-    return res.status(400).json({ message: 'Please provide an image upload or image URL' });
-  }
-
   try {
+    const { name, amount, category, imageUrl } = req.body;
+    
+    console.log("Received data:", { name, amount, category, imageUrl });
+    
+    // Validation
+    if (!name || !amount) {
+      return res.status(400).json({ message: 'Name and amount are required' });
+    }
+    
+    if (!category) {
+      return res.status(400).json({ message: 'Category is required' });
+    }
+
+    let finalImageUrl = imageUrl || '';
+    
+    // If file was uploaded
+    if (req.file) {
+      const baseUrl = process.env.BASE_URL || `http://localhost:5000`;
+      finalImageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+    }
+
+    // If no image was provided
+    if (!finalImageUrl) {
+      return res.status(400).json({ message: 'Image is required' });
+    }
+
     const food = await Food.create({
       name,
-      amount,
-      imageUrl,
-      imageFilename,
+      amount: Number(amount),
+      category,
+      imageUrl: finalImageUrl,
+      imageFilename: req.file?.filename || '',
     });
 
-    return res.status(201).json(food);
+    res.status(201).json(food);
   } catch (error) {
-    return res.status(500).json({ message: 'Server Error', error: error.message });
+    console.error('Error creating food:', error);
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const getFoods = async (_req, res) => {
+// Get all foods
+export const getFoods = async (req, res) => {
   try {
     const foods = await Food.find().sort({ createdAt: -1 });
-    return res.json(foods);
+    console.log(`Found ${foods.length} foods`);
+    res.status(200).json(foods);
   } catch (error) {
-    return res.status(500).json({ message: 'Server Error', error: error.message });
+    console.error('Error fetching foods:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get foods by category
+export const getFoodsByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+    const foods = await Food.find({ 
+      category: { $regex: new RegExp(`^${category}$`, 'i') } 
+    }).sort({ createdAt: -1 });
+    res.status(200).json(foods);
+  } catch (error) {
+    console.error('Error fetching foods by category:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get all unique categories
+export const getCategories = async (req, res) => {
+  try {
+    const categories = await Food.distinct('category');
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ message: error.message });
   }
 };

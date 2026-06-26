@@ -2,7 +2,12 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { createFood, getFoods } from '../controllers/foodController.js';
+import { 
+  createFood, 
+  getFoods, 
+  getFoodsByCategory,
+  getCategories 
+} from '../controllers/foodController.js';
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +27,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get('/', getFoods);
+router.get('/categories', getCategories);
+router.get('/category/:category', getFoodsByCategory);
 router.post('/', upload.single('image'), createFood);
 
 export default router;

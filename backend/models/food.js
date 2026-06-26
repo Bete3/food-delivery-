@@ -21,6 +21,12 @@ const foodSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    category: {
+      type: String,
+      required: [true, 'Please add a category'],
+      trim: true,
+      default: 'Uncategorized',
+    },
   },
   { timestamps: true }
 );
