@@ -1,8 +1,10 @@
-import Food from '../models/food.js';  // Make sure this path is correct
-
+import fs from "fs";
+import path from "path";
+import Food from "../models/food.js";
 // Create a new food
 export const createFood = async (req, res) => {
   try {
+    
     const { name, amount, category, imageUrl } = req.body;
     
     console.log("Received data:", { name, amount, category, imageUrl });
@@ -77,6 +79,72 @@ export const getCategories = async (req, res) => {
     res.status(200).json(categories);
   } catch (error) {
     console.error('Error fetching categories:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+export const updateFood = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, amount, category, imageUrl } = req.body;
+
+    const food = await Food.findById(id);
+
+    if (!food) {
+      return res.status(404).json({ message: "Food not found" });
+    }
+
+    food.name = name || food.name;
+    food.amount = amount ? Number(amount) : food.amount;
+    food.category = category || food.category;
+
+    if (req.file) {
+      // delete old image
+      if (food.imageFilename) {
+        const oldImage = path.join("uploads", food.imageFilename);
+
+        if (fs.existsSync(oldImage)) {
+          fs.unlinkSync(oldImage);
+        }
+      }
+
+      const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+
+      food.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+      food.imageFilename = req.file.filename;
+    } else if (imageUrl) {
+      food.imageUrl = imageUrl;
+    }
+
+    await food.save();
+
+    res.json(food);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const deleteFood = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const food = await Food.findById(id);
+
+    if (!food) {
+      return res.status(404).json({ message: "Food not found" });
+    }
+
+    // delete image from uploads folder
+    if (food.imageFilename) {
+      const imagePath = path.join("uploads", food.imageFilename);
+
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    await Food.findByIdAndDelete(id);
+
+    res.json({ message: "Food deleted successfully" });
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

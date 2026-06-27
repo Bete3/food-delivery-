@@ -24,6 +24,14 @@ export default function AdminBoard() {
   const [items, setItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  
+  // Delete confirmation modal state
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; itemId: string | null; itemName: string }>({
+    isOpen: false,
+    itemId: null,
+    itemName: "",
+  });
 
   useEffect(() => {
     const loadFoods = async () => {
@@ -44,14 +52,13 @@ export default function AdminBoard() {
         const data = await response.json();
         console.log("Foods loaded successfully:", data);
         
-        // Ensure data is an array
         const foodsArray = Array.isArray(data) ? data : [];
         setItems(foodsArray);
         setMessage(`Loaded ${foodsArray.length} items successfully`);
       } catch (error) {
         console.error("Error loading foods:", error);
         setMessage(error instanceof Error ? error.message : "Failed to load foods.");
-        setItems([]); // Set empty array on error
+        setItems([]);
       }
     };
     void loadFoods();
@@ -118,29 +125,97 @@ export default function AdminBoard() {
         payload.append("imageUrl", resolvedImage);
       }
 
-      console.log("Submitting food:", { name: trimmedName, amount: trimmedAmount, category: formData.category });
+      const url = editingId ? `${apiBaseUrl}/api/foods/${editingId}` : `${apiBaseUrl}/api/foods`;
+      const method = editingId ? "PUT" : "POST";
+
+      console.log(`${method}ing food:`, { name: trimmedName, amount: trimmedAmount, category: formData.category });
       
-      const response = await fetch(`${apiBaseUrl}/api/foods`, {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         body: payload,
       });
       
       const data = await response.json();
       console.log("Submit response:", data);
       
-      if (!response.ok) throw new Error(data.message || "Failed to save food item.");
+      if (!response.ok) throw new Error(data.message || `Failed to ${editingId ? 'update' : 'save'} food item.`);
 
-      setItems((currentItems) => [data, ...currentItems]);
+      if (editingId) {
+        setItems((currentItems) => 
+          currentItems.map((item) => (item._id === editingId ? data : item))
+        );
+        setMessage(`✅ Updated ${trimmedName} successfully.`);
+      } else {
+        setItems((currentItems) => [data, ...currentItems]);
+        setMessage(`✅ Saved ${trimmedName} successfully.`);
+      }
+      
       setFormData({ name: "", amount: "", imageUrl: "", category: "" });
       setSelectedFile(null);
       setImagePreview("");
-      setMessage(`✅ Saved ${trimmedName} successfully.`);
+      setEditingId(null);
     } catch (error) {
       console.error("Error saving food:", error);
-      setMessage(error instanceof Error ? error.message : "Failed to save food item.");
+      setMessage(error instanceof Error ? error.message : `Failed to ${editingId ? 'update' : 'save'} food item.`);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Updated delete handler - opens modal instead of using confirm
+  const handleDeleteClick = (id: string, name: string) => {
+    setDeleteModal({
+      isOpen: true,
+      itemId: id,
+      itemName: name,
+    });
+  };
+
+  // Actual delete function
+  const confirmDelete = async () => {
+    if (!deleteModal.itemId) return;
+    
+    setLoading(true);
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/foods/${deleteModal.itemId}`, {
+        method: "DELETE",
+      });
+      
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Failed to delete food item.");
+      }
+      
+      setItems((currentItems) => currentItems.filter((item) => item._id !== deleteModal.itemId));
+      setMessage(`✅ Item deleted successfully.`);
+    } catch (error) {
+      console.error("Error deleting food:", error);
+      setMessage(error instanceof Error ? error.message : "Failed to delete food item.");
+    } finally {
+      setLoading(false);
+      setDeleteModal({ isOpen: false, itemId: null, itemName: "" });
+    }
+  };
+
+  const handleEdit = (item: FoodItem) => {
+    setEditingId(item._id);
+    setFormData({
+      name: item.name,
+      amount: item.amount.toString(),
+      imageUrl: item.imageUrl,
+      category: item.category,
+    });
+    setImagePreview(item.imageUrl);
+    setSelectedFile(null);
+    setMessage(`Editing: ${item.name}`);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setFormData({ name: "", amount: "", imageUrl: "", category: "" });
+    setSelectedFile(null);
+    setImagePreview("");
+    setMessage("");
   };
 
   const categoryOptions = [
@@ -178,12 +253,16 @@ export default function AdminBoard() {
             <div className="mt-8 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
               <section className="rounded-[32px] border border-white bg-white p-6 shadow-[0_24px_70px_-48px_rgba(15,23,42,0.55)] sm:p-8 h-fit">
                 <div className="mb-6 space-y-2">
-                  <p className="text-xs font-medium uppercase tracking-[0.35em] text-[var(--primary)]">Add food</p>
+                  <p className="text-xs font-medium uppercase tracking-[0.35em] text-[var(--primary)]">
+                    {editingId ? "Edit food" : "Add food"}
+                  </p>
                   <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                    Create menu item
+                    {editingId ? "Update menu item" : "Create menu item"}
                   </h2>
                   <p className="text-sm leading-6 text-slate-500 font-normal">
-                    Enter the food name, price amount, category, and picture for your admin menu board.
+                    {editingId 
+                      ? "Update the food name, price amount, category, and picture for your admin menu board." 
+                      : "Enter the food name, price amount, category, and picture for your admin menu board."}
                   </p>
                 </div>
 
@@ -264,13 +343,24 @@ export default function AdminBoard() {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full rounded-2xl bg-[var(--primary)] px-4 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_-18px_rgba(255,122,69,0.95)] transition-transform hover:-translate-y-0.5 disabled:opacity-50"
-                  >
-                    {loading ? "Saving..." : "Save Food Item"}
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="flex-1 rounded-2xl bg-[var(--primary)] px-4 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_-18px_rgba(255,122,69,0.95)] transition-transform hover:-translate-y-0.5 disabled:opacity-50"
+                    >
+                      {loading ? "Saving..." : editingId ? "Update Item" : "Save Food Item"}
+                    </button>
+                    {editingId && (
+                      <button
+                        type="button"
+                        onClick={handleCancelEdit}
+                        className="rounded-2xl border border-slate-200 px-6 py-3.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
                 </form>
               </section>
 
@@ -351,6 +441,22 @@ export default function AdminBoard() {
                               )}
                             </div>
                           </div>
+                          <div className="flex gap-2 shrink-0">
+                            <button
+                              onClick={() => handleEdit(item)}
+                              className="rounded-xl bg-blue-50 px-3 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100"
+                              disabled={loading}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteClick(item._id, item.name)}
+                              className="rounded-xl bg-red-50 px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-100"
+                              disabled={loading}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </article>
                       ))
                     )}
@@ -363,6 +469,99 @@ export default function AdminBoard() {
           <OrdersView />
         )}
       </section>
+
+      {/* Cute & Modern Delete Confirmation Modal */}
+      {deleteModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 animate-fadeIn">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setDeleteModal({ isOpen: false, itemId: null, itemName: "" })}
+          />
+          
+          {/* Modal Card */}
+          <div className="relative max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-scaleIn">
+            {/* Decorative top bar */}
+            <div className="h-2 bg-gradient-to-r from-red-400 to-red-500" />
+            
+            <div className="p-8">
+              {/* Icon */}
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center">
+                  <svg 
+                    className="w-10 h-10 text-red-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-bold text-center text-slate-900">
+                Delete Item?
+              </h3>
+              
+              {/* Description */}
+              <p className="mt-2 text-center text-slate-500 text-sm leading-relaxed">
+                Are you sure you want to delete <span className="font-semibold text-slate-700">"{deleteModal.itemName}"</span>? 
+                This action cannot be undone.
+              </p>
+
+              {/* Item preview chip */}
+              
+
+              {/* Action buttons */}
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setDeleteModal({ isOpen: false, itemId: null, itemName: "" })}
+                  className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-50 hover:border-slate-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  disabled={loading}
+                  className="flex-1 rounded-xl bg-gradient-to-r from-red-500 to-red-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/40 hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                >
+                  {loading ? "Deleting..." : "Delete Item"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add custom keyframes for animations */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { 
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+          }
+          to { 
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      `}</style>
     </main>
   );
 }

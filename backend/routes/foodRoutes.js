@@ -1,13 +1,15 @@
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { 
-  createFood, 
-  getFoods, 
+import express from "express";
+import multer from "multer";
+import path from "path";
+import { fileURLToPath } from "url";
+import {
+  createFood,
+  getFoods,
   getFoodsByCategory,
-  getCategories 
-} from '../controllers/foodController.js';
+  getCategories,
+  updateFood,
+  deleteFood,
+} from "../controllers/foodController.js";
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -30,5 +32,6 @@ router.get('/', getFoods);
 router.get('/categories', getCategories);
 router.get('/category/:category', getFoodsByCategory);
 router.post('/', upload.single('image'), createFood);
-
+router.put("/:id", upload.single("image"), updateFood);
+router.delete("/:id", deleteFood);
 export default router;
