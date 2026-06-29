@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
 export default function SignupForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,6 +71,9 @@ export default function SignupForm() {
 
       setSuccess(true);
       setFormData({ name: "", email: "", password: "" });
+      
+      // Redirects user directly to your home landing page ("/")
+      router.push("/");
     } catch (requestError) {
       setError(
         requestError instanceof Error
@@ -81,37 +87,48 @@ export default function SignupForm() {
 
   return (
     <div className="min-h-screen w-full flex bg-slate-50 font-sans">
-      <div
-        className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-between relative overflow-hidden"
-        style={{
-          backgroundImage: "linear-gradient(135deg, rgba(255,122,69,0.12), rgba(255,122,69,0.06), rgba(255,255,255,0.95))",
-        }}
-      >
-        <div className="absolute top-1/4 -left-10 w-72 h-72 rounded-full blur-3xl animate-pulse bg-black/15" />
-        <div className="absolute bottom-1/4 right-0 w-60 h-60 rounded-full blur-3xl bg-black/10" />
+      
+      {/* Left Side Column - Immersive Image Background */}
+      <div className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-between relative overflow-hidden">
+        
+        {/* Next.js Optimized Full-Bleed Background Image */}
+        <Image
+          src="/images/image2.png"
+          alt="Food City Onboarding Background"
+          fill
+          priority
+          className="object-cover object-center z-0"
+        />
 
-        <div className="flex items-center gap-2 relative z-10">
-          <div className="w-10 h-10 bg-[var(--primary)] rounded-xl flex items-center justify-center shadow-md shadow-[rgba(255,122,69,0.18)]">
-            <span className="text-white text-xl font-bold">✨</span>
-          </div>
-          <span className="font-bold text-lg text-slate-800 tracking-tight">YourBrand</span>
-        </div>
+        {/* Dynamic Dark/Warm Overlay to ensure readability over your custom image */}
+        <div 
+          className="absolute inset-0 z-10" 
+          style={{
+            backgroundImage: "linear-gradient(to bottom, rgba(45, 27, 20, 0.4), rgba(45, 27, 20, 0.2), rgba(45, 27, 20, 0.75))"
+          }}
+        />
 
-          <div className="max-w-md my-auto relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-sm border border-black/10 shadow-sm text-xs font-semibold text-black">
-            <span>🎉</span> Join over 10,000+ happy humans
+        {/* Logo Branding */}
+        <div className="relative z-20 flex items-center gap-3 drop-shadow-md">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-lg font-black text-[var(--primary)] shadow-lg shadow-[rgba(255,122,69,0.28)]">
+              FD
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/70">Food City</p>
+            </div>
           </div>
-          <h2 className="text-4xl font-extrabold text-slate-800 leading-tight">
+        {/* Hero Copy Overlay */}
+        <div className="max-w-md my-auto relative z-20 space-y-4 drop-shadow-xl">
+          <h2 className="text-4xl font-extrabold text-white leading-tight">
             Start your beautiful journey with us today.
           </h2>
-          <p className="text-base text-slate-600 leading-relaxed">
+          <p className="text-base text-white/90 leading-relaxed font-medium">
             Get access to your personalized dashboard, cute customizable themes, and a community that genuinely cheers you on.
           </p>
         </div>
-
-        <p className="text-xs text-slate-400 relative z-10">© 2026 YourBrand Inc. Made with love and pixels.</p>
       </div>
 
+      {/* Right Side Column - Authentication Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 bg-white relative">
         <div
           className="absolute inset-0 lg:hidden pointer-events-none"
@@ -120,7 +137,7 @@ export default function SignupForm() {
 
         <div className="w-full max-w-md space-y-8 relative z-10">
           <div className="space-y-2">
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Create an account ✨</h1>
+            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Create an account </h1>
             <p className="text-sm text-slate-500">Let&apos;s get you set up in less than 60 seconds.</p>
           </div>
 
@@ -171,7 +188,6 @@ export default function SignupForm() {
                 onChange={handleChange}
                 placeholder="Must be at least 8 characters"
                 autoComplete="new-password"
-                minLength={8}
                 className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-black/5 transition-all text-sm"
               />
             </div>
@@ -179,14 +195,14 @@ export default function SignupForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-4 py-3.5 bg-[var(--primary)] hover:opacity-95 text-white font-semibold rounded-2xl shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-4 py-3.5 bg-[var(--primary)] hover:opacity-95 text-white font-semibold rounded-2xl shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
-              {loading ? "Creating your account..." : "Get Started 🚀"}
+              {loading ? "Creating your account..." : "Get Started "}
             </button>
           </form>
 
           <p className="text-center text-xs text-slate-400">
-            Or jump straight to the dedicated <Link href="/login" className="font-semibold text-secondary hover:underline underline-offset-4">login page</Link>.
+            Or jump straight to the dedicated <Link href="/login" className="font-semibold text-[var(--primary)] hover:underline underline-offset-4">login page</Link>.
           </p>
         </div>
       </div>

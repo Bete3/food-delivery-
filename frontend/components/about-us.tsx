@@ -87,7 +87,7 @@ export default function AboutUs() {
           {/* IMAGE 2: Clear, crisp image container */}
           <div className="relative h-[400px] w-full rounded-[28px] overflow-hidden bg-white border border-slate-100 shadow-md flex items-center justify-center order-2 lg:order-1">
             <img 
-              src="/images/deliver2.png" 
+              src="/images/image1.png" 
               alt="Our Operations" 
               className="absolute inset-0 w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLElement).style.display = 'none' }}

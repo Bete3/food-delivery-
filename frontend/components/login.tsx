@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -60,6 +63,9 @@ export default function LoginForm() {
 
       setSuccess(true);
       setFormData({ email: "", password: "" });
+      
+      // Redirects user directly to the home landing page
+      router.push("/");
     } catch (requestError) {
       setError(
         requestError instanceof Error
@@ -72,40 +78,61 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 text-slate-900">
+    <div className="min-h-screen w-full bg-slate-50 text-slate-900 font-sans">
       <div className="grid min-h-screen lg:grid-cols-2">
-        <section className="relative hidden overflow-hidden bg-[var(--primary)] px-12 py-10 text-white lg:flex lg:flex-col lg:justify-between">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_30%)]" />
-          <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-white/5 blur-3xl" />
+        
+        {/* Left Side Column - Immersive Image Background matching Signup Page */}
+        <section className="relative hidden overflow-hidden px-12 py-10 text-white lg:flex lg:flex-col lg:justify-between">
+          
+          {/* Next.js Optimized Full-Bleed Background Image */}
+          <Image
+            src="/images/image3.png"
+            alt="Food City Authentication Background"
+            fill
+            priority
+            className="object-cover object-center z-0"
+          />
 
-          <div className="relative z-10 flex items-center gap-3">
+          {/* Dynamic Dark/Warm Overlay to ensure maximum text readability over your image */}
+          <div 
+            className="absolute inset-0 z-10" 
+            style={{
+              backgroundImage: "linear-gradient(to bottom, rgba(45, 27, 20, 0.4), rgba(45, 27, 20, 0.2), rgba(45, 27, 20, 0.75))"
+            }}
+          />
+          
+          <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-white/10 blur-3xl z-10" />
+          <div className="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-white/5 blur-3xl z-10" />
+
+          {/* Brand Header Identity */}
+          <div className="relative z-20 flex items-center gap-3 drop-shadow-md">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-lg font-black text-[var(--primary)] shadow-lg shadow-[rgba(255,122,69,0.28)]">
               FD
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Food Delivery</p>
-              <p className="text-lg font-semibold tracking-tight">Fast, simple, and ready when you are.</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/70">Food City</p>
             </div>
           </div>
 
-          <div className="relative z-10 max-w-lg space-y-6">
-            <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+          {/* Copy Identity Block */}
+          <div className="relative z-20 max-w-lg space-y-6 drop-shadow-xl">
+            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/90">
               Welcome back
             </span>
-              <h1 className="text-5xl font-black leading-[1.02] tracking-tight">
+            <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight">
               Sign in and pick up where you left off.
             </h1>
-            <p className="max-w-md text-base leading-7 text-white/70">
+            <p className="max-w-md text-base leading-7 text-white/90 font-medium">
               Manage orders, review favorites, and keep everything in one place with a login flow that stays focused and quick.
             </p>
           </div>
 
-          <p className="relative z-10 text-xs uppercase tracking-[0.28em] text-white/35">
+          <p className="relative z-20 text-xs uppercase tracking-[0.28em] text-white/60 drop-shadow-sm">
             Secure access for returning customers
           </p>
         </section>
 
+        {/* Right Side Column - Form Interface */}
         <section className="relative flex items-center justify-center px-6 py-12 sm:px-10 lg:px-14">
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.03),transparent_20%)] lg:hidden" />
 
@@ -155,7 +182,7 @@ export default function LoginForm() {
                   <label className="text-xs font-bold uppercase tracking-[0.25em] text-slate-500">
                     Password
                   </label>
-                  <button type="button" className="text-xs font-semibold text-slate-500 transition-colors hover:text-slate-900">
+                  <button type="button" className="text-xs font-semibold text-slate-500 transition-colors hover:text-slate-900 cursor-pointer">
                     Forgot?
                   </button>
                 </div>
@@ -173,7 +200,7 @@ export default function LoginForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-2 w-full rounded-2xl bg-[var(--primary)] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-2 w-full rounded-2xl bg-[var(--primary)] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
               >
                 {loading ? "Signing you in..." : "Sign In"}
               </button>
@@ -189,7 +216,7 @@ export default function LoginForm() {
             </div>
 
             <div className="text-center">
-                  <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600">
                 Need an account?{" "}
                 <Link href="/signup" className="font-semibold text-[var(--primary)] underline-offset-4 hover:underline">
                   Create one here
