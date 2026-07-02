@@ -12,14 +12,19 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 const uploadDir = path.resolve('uploads');
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-app.use(cors({ origin: clientOrigin }));
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://backend-iy4z.onrender.com"
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use('/uploads', express.static(uploadDir));
 
