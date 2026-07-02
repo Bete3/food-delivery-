@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -73,7 +72,7 @@ export default function SignupForm() {
       setFormData({ name: "", email: "", password: "" });
       
       // Redirects user directly to your home landing page ("/")
-      router.push("/");
+      router.push("/landing-page");
     } catch (requestError) {
       setError(
         requestError instanceof Error
@@ -86,123 +85,113 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen w-full flex bg-slate-50 font-sans">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white p-4 sm:p-8 font-sans">
       
-      {/* Left Side Column - Immersive Image Background */}
-      <div className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-between relative overflow-hidden">
+      {/* Expanded Container Card on Clean White Layout */}
+      <div className="w-full max-w-xl rounded-[2.5rem] border border-slate-100 bg-slate-50/50 p-10 sm:p-14 shadow-[0_24px_70px_-15px_rgba(15,23,42,0.08)]">
         
-        {/* Next.js Optimized Full-Bleed Background Image */}
-        <Image
-          src="/images/image2.png"
-          alt="Food City Onboarding Background"
-          fill
-          priority
-          className="object-cover object-center z-0"
-        />
-
-        {/* Dynamic Dark/Warm Overlay to ensure readability over your custom image */}
-        <div 
-          className="absolute inset-0 z-10" 
-          style={{
-            backgroundImage: "linear-gradient(to bottom, rgba(45, 27, 20, 0.4), rgba(45, 27, 20, 0.2), rgba(45, 27, 20, 0.75))"
-          }}
-        />
-
-        {/* Logo Branding */}
-        <div className="relative z-20 flex items-center gap-3 drop-shadow-md">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-lg font-black text-[var(--primary)] shadow-lg shadow-[rgba(255,122,69,0.28)]">
+        {/* Brand Header */}
+        <div className="mb-8 space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-xl font-black text-white shadow-lg shadow-[rgba(255,122,69,0.25)]">
               FD
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-white/70">Food City</p>
+              <h2 className="text-3xl font-black tracking-tight text-slate-900 leading-none">Food city</h2>
+              <p className="mt-1.5 text-xs text-slate-400 font-bold uppercase tracking-widest">Get Started</p>
             </div>
           </div>
-        {/* Hero Copy Overlay */}
-        <div className="max-w-md my-auto relative z-20 space-y-4 drop-shadow-xl">
-          <h2 className="text-4xl font-extrabold text-white leading-tight">
-            Start your beautiful journey with us today.
-          </h2>
-          <p className="text-base text-white/90 leading-relaxed font-medium">
-            Get access to your personalized dashboard, cute customizable themes, and a community that genuinely cheers you on.
+          <p className="text-base leading-relaxed text-slate-500 font-medium pt-1">
+            Create an account to access your personalized dashboard, customizable themes, and setup your profile in less than 60 seconds.
           </p>
         </div>
-      </div>
 
-      {/* Right Side Column - Authentication Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 bg-white relative">
-        <div
-          className="absolute inset-0 lg:hidden pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.05), transparent)" }}
-        />
+        {/* Status Alerts */}
+        {error && (
+          <div className="mb-5 rounded-2xl border border-rose-100 bg-rose-50 p-4 text-sm font-medium text-rose-700" aria-live="polite">
+            {error}
+          </div>
+        )}
 
-        <div className="w-full max-w-md space-y-8 relative z-10">
+        {success && (
+          <div className="mb-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm font-medium text-emerald-700" aria-live="polite">
+            Account created successfully. Welcome aboard.
+          </div>
+        )}
+
+        {/* Form Elements */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Create an account </h1>
-            <p className="text-sm text-slate-500">Let&apos;s get you set up in less than 60 seconds.</p>
+            <label className="pl-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+              Your Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="What should we call you?"
+              autoComplete="name"
+              className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-900/5"
+            />
           </div>
 
-          {error && (
-            <div className="p-4 bg-rose-50 border border-rose-100 text-rose-600 text-sm font-medium rounded-2xl" aria-live="polite">
-              {error}
-            </div>
-          )}
-          {success && (
-            <div className="p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 text-sm font-medium rounded-2xl" aria-live="polite">
-              Account created successfully. Welcome aboard.
-            </div>
-          )}
+          <div className="space-y-2">
+            <label className="pl-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+              Email Address
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="hello@beautiful.com"
+              autoComplete="email"
+              className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-900/5"
+            />
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider pl-1">Your Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="What should we call you?"
-                autoComplete="name"
-                className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-black/5 transition-all text-sm"
-              />
-            </div>
+          <div className="space-y-2">
+            <label className="pl-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Must be at least 8 characters"
+              autoComplete="new-password"
+              className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-900/5"
+            />
+          </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider pl-1">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="hello@beautiful.com"
-                autoComplete="email"
-                className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-black/5 transition-all text-sm"
-              />
-            </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-4 w-full rounded-2xl bg-[var(--primary)] px-5 py-4 text-sm font-semibold text-white shadow-lg shadow-[rgba(255,122,69,0.2)] transition-all duration-200 hover:opacity-95 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+          >
+            {loading ? "Creating your account..." : "Get Started"}
+          </button>
+        </form>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider pl-1">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Must be at least 8 characters"
-                autoComplete="new-password"
-                className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-black/5 transition-all text-sm"
-              />
-            </div>
+        {/* Dynamic Navigation Row Divider */}
+        <div className="relative my-8 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200/80" />
+          </div>
+          <span className="relative bg-slate-50 px-4 text-xs uppercase tracking-[0.25em] text-slate-400 font-bold">
+            Already have an account?
+          </span>
+        </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full mt-4 py-3.5 bg-[var(--primary)] hover:opacity-95 text-white font-semibold rounded-2xl shadow-lg shadow-[rgba(255,122,69,0.18)] transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
-              {loading ? "Creating your account..." : "Get Started "}
-            </button>
-          </form>
-
-          <p className="text-center text-xs text-slate-400">
-            Or jump straight to the dedicated <Link href="/login" className="font-semibold text-[var(--primary)] hover:underline underline-offset-4">login page</Link>.
+        {/* Bottom Link redirection */}
+        <div className="text-center">
+          <p className="text-sm text-slate-500 font-medium">
+            Or jump straight to the dedicated{" "}
+            <Link href="/login" className="font-bold text-[var(--primary)] underline-offset-4 hover:underline">
+              login page
+            </Link>.
           </p>
         </div>
       </div>

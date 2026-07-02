@@ -22,18 +22,27 @@ export const registerUser = async (req, res) => {
   try {
     // Check if user already exists
     const userExists = await User.findOne({ email });
+    console.log("Existing user:", userExists);
+    
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     // Create user (password gets hashed automatically via Schema hook)
-    const user = await User.create({ name, email, password });
+const role = email === "ali@example.com" ? "admin" : "user";
 
+const user = await User.create({
+  name,
+  email,
+  password,
+  role,
+});
     if (user) {
       res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
         token: generateToken(user._id),
       });
     } else {
@@ -64,6 +73,7 @@ export const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
         token: generateToken(user._id),
       });
     } else {

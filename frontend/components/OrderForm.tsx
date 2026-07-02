@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 export default function OrderForm({ food }: { food: any }) {
+
+
   const [formData, setFormData] = useState({
     amount: "",
     name: "",
@@ -66,17 +68,17 @@ export default function OrderForm({ food }: { food: any }) {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           
-          {/* Amount */}
+          {/* Quantity */}
           <div>
             <label className="text-sm font-medium text-[var(--primary)]">
-              Amount
+              Quantity
             </label>
             <input
               name="amount"
               type="number"
               value={formData.amount}
               onChange={handleChange}
-              placeholder="Enter amount"
+              placeholder="Enter quantity"
               className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
             />
           </div>

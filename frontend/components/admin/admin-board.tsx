@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/admin/Sidebar";
 import OrdersView from "@/components/admin/OrdersView";
 
@@ -32,7 +33,15 @@ export default function AdminBoard() {
     itemId: null,
     itemName: "",
   });
+  const router = useRouter();
 
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("userData") || "{}");
+
+  if (user.role !== "admin") {
+    router.replace("/login");
+  }
+}, [router]);
   useEffect(() => {
     const loadFoods = async () => {
       try {
