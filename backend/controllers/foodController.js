@@ -107,7 +107,7 @@ export const updateFood = async (req, res) => {
         }
       }
 
-      const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+      const baseUrl = process.env.BASE_URL;
 
       food.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
       food.imageFilename = req.file.filename;

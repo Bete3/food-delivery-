@@ -34,7 +34,7 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/foods", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/foods`, {
           cache: "no-store",
         });
         const data = await res.json();
