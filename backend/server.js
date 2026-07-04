@@ -21,7 +21,7 @@ if (!fs.existsSync(uploadDir)) {
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://backend-iy4z.onrender.com"
+    "https://food-delivery-pi-flax.vercel.app"
   ],
 
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
