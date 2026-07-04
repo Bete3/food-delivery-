@@ -12,8 +12,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-const uploadDir = path.resolve('uploads');
-
+const uploadDir = path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
