@@ -8,26 +8,36 @@ export default function OrdersView() {
 
   // 🔴 LIVE ORDERS (AUTO REFRESH)
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/orders");
-        const data = await res.json();
-        setOrders(data);
-      } catch (err) {
-        console.log("Fetch error:", err);
+  const fetchOrders = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/orders`,
+        {
+          cache: "no-store",
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch orders");
       }
-    };
 
-    fetchOrders();
+      const data = await res.json();
+      setOrders(data);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
 
-    const interval = setInterval(fetchOrders, 3000);
+  fetchOrders();
 
-    return () => clearInterval(interval);
-  }, []);
+  const interval = setInterval(fetchOrders, 3000);
+
+  return () => clearInterval(interval);
+}, []);
 
   // ⚙️ UPDATE STATUS
   const updateStatus = async (id: string, status: string) => {
-    const res = await fetch(`http://localhost:5000/api/orders/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -42,7 +52,7 @@ export default function OrdersView() {
     // 🗑️ AUTO DELETE COMPLETED
     if (status === "Completed") {
       setTimeout(async () => {
-        await fetch(`http://localhost:5000/api/orders/${id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}`, {
           method: "DELETE",
         });
 
