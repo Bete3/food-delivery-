@@ -6,7 +6,7 @@ export default function OrderCard({
   order: any;
 }) {
   return (
-    <div className="group overflow-hidden rounded-[32px] bg-white border border-white shadow-xl hover:-translate-y-1 transition">
+    <div className="group overflow-hidden rounded-[32px] border border-white bg-white shadow-xl transition hover:-translate-y-1">
 
       <div className="relative h-48">
         <img
@@ -20,10 +20,10 @@ export default function OrderCard({
         </span>
       </div>
 
-      <div className="p-6">
+      <div className="p-5 sm:p-6">
 
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold text-lg text-slate-900">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-bold text-slate-900">
             {order.name}
           </h3>
 
@@ -40,7 +40,7 @@ export default function OrderCard({
           {order.address}
         </p>
 
-        <div className="mt-5 flex items-center justify-between">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span
             className={`px-4 py-2 rounded-full text-xs font-bold
             ${

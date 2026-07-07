@@ -5,7 +5,7 @@ import React from "react";
 export default function AboutUs() {
   return (
     <section 
-      className="min-h-screen bg-[#fff7f1] text-slate-900 py-16 px-6 sm:px-8 lg:px-10"
+      className="min-h-screen bg-[#fff7f1] text-slate-900 py-12 px-4 sm:px-6 sm:py-16 lg:px-10"
       style={{
         ["--primary" as string]: "#ff7a45",
         ["--primary-soft" as string]: "rgba(255, 122, 69, 0.14)",
@@ -46,7 +46,7 @@ export default function AboutUs() {
           </div>
           
           {/* IMAGE 1: Clear, crisp image container */}
-          <div className="relative h-[400px] w-full rounded-[28px] overflow-hidden bg-white border border-slate-100 shadow-md flex items-center justify-center">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-md flex items-center justify-center">
             <img 
               src="/images/delivery1.png" 
               alt="Our Story Imagery" 
@@ -85,7 +85,7 @@ export default function AboutUs() {
         {/* SECTION 4: HOW WE DO IT & SECOND IMAGE PLACEHOLDER */}
         <div className="grid gap-12 lg:grid-cols-2 items-center">
           {/* IMAGE 2: Clear, crisp image container */}
-          <div className="relative h-[400px] w-full rounded-[28px] overflow-hidden bg-white border border-slate-100 shadow-md flex items-center justify-center order-2 lg:order-1">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-md flex items-center justify-center order-2 lg:order-1">
             <img 
               src="/images/image1.png" 
               alt="Our Operations" 

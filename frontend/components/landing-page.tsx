@@ -111,8 +111,8 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-black/50"></div>
 
         {/* Content */}
-        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-8 lg:px-10">
-          <header className="flex items-center justify-between gap-6 rounded-full bg-white/10 px-5 py-3 backdrop-blur-md">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pb-14 pt-4 sm:px-6 lg:px-10">
+          <header className="flex flex-col gap-4 rounded-3xl bg-white/10 px-4 py-4 backdrop-blur-md sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-6 sm:rounded-full sm:px-5 sm:py-3">
             <button 
               onClick={() => setActivePage("Menu")} 
               className="flex items-center gap-2 bg-transparent border-none cursor-pointer text-left focus:outline-none"
@@ -126,13 +126,13 @@ export default function LandingPage() {
             </button>
 
             {/* Interactive Navigation Items */}
-            <nav className="hidden items-center gap-7 text-sm text-white lg:flex">
+            <nav className="flex w-full items-center gap-3 overflow-x-auto pb-1 text-sm text-white sm:flex-wrap sm:justify-center sm:overflow-visible sm:pb-0 lg:w-auto lg:justify-start">
               {navItems.map((item) => (
                 <button
                   key={item}
                   type="button"
                   onClick={() => setActivePage(item as any)}
-                  className={`transition-colors hover:text-[var(--primary)] cursor-pointer bg-transparent border-none font-medium focus:outline-none ${
+                  className={`shrink-0 bg-transparent px-1 py-1 text-xs font-medium transition-colors hover:text-[var(--primary)] focus:outline-none sm:text-sm ${
                     activePage === item ? "text-[var(--primary)] font-bold" : "text-white"
                   }`}
                 >
@@ -141,21 +141,34 @@ export default function LandingPage() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 self-start sm:self-auto">
               <Link
                 href="/homepage"
-                className="hidden rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_16px_30px_-16px_rgba(255,122,69,0.8)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+                aria-label="Back to homepage"
+                title="Back"
+                className="inline-flex h-9 w-9 items-center justify-center text-white transition-transform hover:-translate-y-0.5 hover:text-[var(--primary)]"
               >
-                Logout
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
               </Link>
 
               
             </div>
           </header>
 
-          <div className="grid items-center gap-12 pb-8 pt-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:pt-16">
+          <div className="grid items-center gap-10 pb-6 pt-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:pt-16">
             <div className="max-w-2xl space-y-8">
-              <h1 className="max-w-xl text-5xl font-black leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.4rem]">
+              <h1 className="max-w-xl text-4xl font-black leading-[1] tracking-[-0.04em] text-white sm:text-5xl lg:text-[4.4rem]">
                 {getHeroTitle()}
               </h1>
 
@@ -175,7 +188,7 @@ export default function LandingPage() {
       ) : (
         <>
           {/* DEFAULT MENU VIEW */}
-          <section id="menu" className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
+          <section id="menu" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-10">
             <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.4em] text-[var(--primary)]">

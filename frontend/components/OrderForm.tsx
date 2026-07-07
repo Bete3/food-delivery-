@@ -43,13 +43,13 @@ export default function OrderForm({ food }: { food: any }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative">
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
       {/* Soft glowing background blobs */}
       <div className="absolute top-10 left-10 h-40 w-40 rounded-full bg-[var(--primary)] opacity-10 blur-3xl" />
       <div className="absolute bottom-10 right-10 h-52 w-52 rounded-full bg-[var(--primary)] opacity-10 blur-3xl" />
 
       {/* Card */}
-      <div className="relative w-full max-w-lg rounded-3xl backdrop-blur-xl shadow-2xl border border-white p-8">
+      <div className="relative w-full max-w-lg rounded-3xl border border-white p-6 shadow-2xl backdrop-blur-xl sm:p-8">
         
         {/* Header */}
         <div className="text-center mb-8">
@@ -57,11 +57,11 @@ export default function OrderForm({ food }: { food: any }) {
             <span className="text-xl">🛍️</span>
           </div>
 
-          <h1 className="text-3xl font-bold text-[var(--primary)]">
+          <h1 className="text-2xl font-bold text-[var(--primary)] sm:text-3xl">
             Place Your Order
           </h1>
 
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="mt-2 text-sm text-gray-500">
             Fill your details and we'll handle the rest 
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function OrderForm({ food }: { food: any }) {
               value={formData.amount}
               onChange={handleChange}
               placeholder="Enter quantity"
-              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
+              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
             />
           </div>
 
@@ -93,7 +93,7 @@ export default function OrderForm({ food }: { food: any }) {
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
+              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
             />
           </div>
 
@@ -107,7 +107,7 @@ export default function OrderForm({ food }: { food: any }) {
               value={formData.number}
               onChange={handleChange}
               placeholder="09xxxxxxxx"
-              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
+              className="mt-1 w-full rounded-2xl border border-orange-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
             />
           </div>
 
@@ -122,14 +122,14 @@ export default function OrderForm({ food }: { food: any }) {
               onChange={handleChange}
               placeholder="Enter your delivery address..."
               rows={4}
-              className="mt-1 w-full resize-none rounded-2xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
+              className="mt-1 w-full resize-none rounded-2xl border border-orange-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]"
             />
           </div>
 
           {/* Button */}
           <button
             type="submit"
-            className="w-full rounded-2xl bg-[var(--primary)] py-3 font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:opacity-90 active:scale-[0.98]"
+            className="w-full rounded-2xl bg-[var(--primary)] py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:opacity-90 active:scale-[0.98]"
           >
             Submit Order
           </button>
@@ -146,7 +146,7 @@ export default function OrderForm({ food }: { food: any }) {
           />
           
           {/* Popup Card */}
-          <div className="relative bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 animate-bounce-in">
+          <div className="relative w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl animate-bounce-in sm:p-8">
             {/* Decorative elements */}
             <div className="absolute -top-3 -right-3 h-16 w-16 rounded-full bg-pink-200 opacity-30 blur-xl" />
             <div className="absolute -bottom-3 -left-3 h-16 w-16 rounded-full bg-orange-200 opacity-30 blur-xl" />

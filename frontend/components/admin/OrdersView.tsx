@@ -62,12 +62,12 @@ export default function OrdersView() {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-[#fff7f1]">
+    <div className="min-h-screen bg-[#fff7f1] p-4 sm:p-6">
 
       {/* HEADER */}
       <div className="rounded-3xl bg-white shadow-2xl overflow-hidden border border-orange-100">
 
-        <div className="bg-gradient-to-r from-[var(--primary)] to-orange-400 text-white p-5 flex items-center justify-between">
+        <div className="flex flex-col gap-3 bg-gradient-to-r from-[var(--primary)] to-orange-400 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <h1 className="text-lg font-bold">
             🍔 Orders Dashboard
           </h1>
@@ -82,13 +82,13 @@ export default function OrdersView() {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
 
-            <thead className="bg-orange-50 text-gray-700 text-sm">
+            <thead className="bg-orange-50 text-sm text-gray-700">
               <tr>
-                <th className="p-4">#</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th className="p-3 sm:p-4">#</th>
+                <th className="p-3 sm:p-4">Name</th>
+                <th className="p-3 sm:p-4">Phone</th>
+                <th className="p-3 sm:p-4">Status</th>
+                <th className="p-3 sm:p-4">Action</th>
               </tr>
             </thead>
 
@@ -100,22 +100,22 @@ export default function OrdersView() {
                 >
 
                   {/* ID */}
-                  <td className="p-4 font-bold text-[var(--primary)]">
+                  <td className="p-3 font-bold text-[var(--primary)] sm:p-4">
                     {index + 1}
                   </td>
 
                   {/* NAME */}
-                  <td className="font-semibold text-gray-800">
+                  <td className="p-3 font-semibold text-gray-800 sm:p-4">
                     {order.name}
                   </td>
 
                   {/* PHONE */}
-                  <td className="text-gray-600">
+                  <td className="p-3 text-gray-600 sm:p-4">
                     {order.number}
                   </td>
 
                   {/* STATUS DROPDOWN */}
-                  <td>
+                  <td className="p-3 sm:p-4">
                     <select
                       value={order.status}
                       onChange={(e) =>
@@ -136,7 +136,7 @@ export default function OrdersView() {
                   </td>
 
                   {/* VIEW BUTTON */}
-                  <td>
+                  <td className="p-3 sm:p-4">
                     <button
                       onClick={() => setSelectedOrder(order)}
                       className="
@@ -161,7 +161,7 @@ export default function OrdersView() {
       {selectedOrder && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
 
-          <div className="w-[420px] bg-white rounded-3xl shadow-2xl p-6">
+          <div className="w-[calc(100vw-2rem)] max-w-[420px] rounded-3xl bg-white p-5 shadow-2xl sm:p-6">
 
             {/* IMAGE SAFE */}
             {selectedOrder.foodImage ? (

@@ -20,13 +20,13 @@ export default function ContactUs() {
 
   return (
     <section 
-      className="mx-auto max-w-4xl px-6 py-16 sm:px-8 lg:px-10"
+      className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10"
       style={{
         ["--primary" as string]: "#ff7a45",
         ["--primary-soft" as string]: "rgba(255, 122, 69, 0.14)",
       } as React.CSSProperties}
     >
-      <div className="bg-white rounded-[32px] p-8 sm:p-12 border border-slate-100 shadow-[0_22px_60px_-44px_rgba(15,23,42,0.3)]">
+      <div className="rounded-[28px] border border-slate-100 bg-white p-6 shadow-[0_22px_60px_-44px_rgba(15,23,42,0.3)] sm:rounded-[32px] sm:p-10 lg:p-12">
         <div className="text-center max-w-xl mx-auto mb-10">
           <p className="text-xs font-extrabold uppercase tracking-[0.4em] text-[var(--primary)]">
             Get In Touch

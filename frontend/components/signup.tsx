@@ -85,14 +85,14 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white p-4 sm:p-8 font-sans">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white px-4 py-8 sm:px-6 sm:py-10 font-sans">
       
       {/* Expanded Container Card on Clean White Layout */}
-      <div className="w-full max-w-xl rounded-[2.5rem] border border-slate-100 bg-slate-50/50 p-10 sm:p-14 shadow-[0_24px_70px_-15px_rgba(15,23,42,0.08)]">
+      <div className="w-full max-w-xl rounded-[2rem] border border-slate-100 bg-slate-50/50 p-6 shadow-[0_24px_70px_-15px_rgba(15,23,42,0.08)] sm:rounded-[2.5rem] sm:p-10 lg:p-14">
         
         {/* Brand Header */}
         <div className="mb-8 space-y-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-xl font-black text-white shadow-lg shadow-[rgba(255,122,69,0.25)]">
               FD
             </div>
@@ -101,7 +101,7 @@ export default function SignupForm() {
               <p className="mt-1.5 text-xs text-slate-400 font-bold uppercase tracking-widest">Get Started</p>
             </div>
           </div>
-          <p className="text-base leading-relaxed text-slate-500 font-medium pt-1">
+          <p className="max-w-prose text-base leading-relaxed text-slate-500 font-medium pt-1">
             Create an account to access your personalized dashboard, customizable themes, and setup your profile in less than 60 seconds.
           </p>
         </div>

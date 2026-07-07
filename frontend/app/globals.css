@@ -10,4 +10,6 @@ body {
   background-color: var(--secondary);
   color: var(--primary);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  min-width: 320px;
+  overflow-x: hidden;
 }

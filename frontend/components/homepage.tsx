@@ -7,13 +7,13 @@ export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen antialiased font-sans text-slate-900 bg-[var(--secondary)] selection:bg-[var(--primary-soft)] selection:text-[var(--primary)]">
+    <div className="min-h-screen overflow-x-hidden antialiased font-sans text-slate-900 bg-[var(--secondary)] selection:bg-[var(--primary-soft)] selection:text-[var(--primary)]">
 
       {/* HEADER */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-[var(--secondary)]/90 border-b border-[var(--primary-soft)] px-6 py-4 md:px-12 flex items-center justify-between">
+      <header className="sticky top-0 z-50 flex flex-col gap-4 border-b border-[var(--primary-soft)] bg-[var(--secondary)]/90 px-4 py-4 backdrop-blur-md sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-12">
 
         {/* Logo */}
-        <div className="flex items-center gap-3 cursor-pointer">
+        <div className="flex items-center gap-3 cursor-pointer self-start">
           <div className="w-9 h-9 rounded-xl bg-[var(--primary)] flex items-center justify-center text-white font-black text-lg shadow-sm">
             F
           </div>
@@ -24,18 +24,18 @@ export default function LandingPage() {
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex w-full items-center gap-3 sm:w-auto sm:justify-end">
 
           <button
             onClick={() => router.push("/login")}
-            className="cursor-pointer px-5 py-2 rounded-full text-sm font-bold border border-slate-300 hover:border-slate-900 transition-colors"
+            className="cursor-pointer flex-1 rounded-full border border-slate-300 px-5 py-2 text-sm font-bold transition-colors hover:border-slate-900 sm:flex-none"
           >
             Login
           </button>
 
           <button
             onClick={() => router.push("/signup")}
-            className="cursor-pointer px-5 py-2 bg-[var(--primary)] text-white text-sm font-bold rounded-full hover:brightness-105 shadow-sm transition-all"
+            className="cursor-pointer flex-1 rounded-full bg-[var(--primary)] px-5 py-2 text-sm font-bold text-white shadow-sm transition-all hover:brightness-105 sm:flex-none"
           >
             Sign Up
           </button>
@@ -44,11 +44,11 @@ export default function LandingPage() {
       </header>
 
       {/* HERO */}
-      <section className="max-w-7xl mx-auto px-6 py-12 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-10 sm:px-6 md:px-12 lg:grid-cols-12 lg:gap-12 lg:py-12">
 
-        <div className="lg:col-span-5 flex flex-col space-y-6 text-center lg:text-left">
+        <div className="flex flex-col space-y-6 text-center lg:col-span-5 lg:text-left">
 
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-[1.15]">
+          <h1 className="text-3xl font-black leading-[1.12] tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             Your favorite meals <br />
             delivered hot & fresh <br />
             <span className="text-[var(--primary)] uppercase">
@@ -62,7 +62,7 @@ export default function LandingPage() {
             straight to your doorstep with lightning-fast delivery.
           </p>
 
-          <div className="flex items-center justify-center lg:justify-start pt-2">
+          <div className="flex items-center justify-center pt-2 lg:justify-start">
 
             <button
               onClick={() => router.push("/signup")}
@@ -76,8 +76,8 @@ export default function LandingPage() {
         </div>
 
         {/* Hero Image */}
-        <div className="lg:col-span-7 flex justify-center relative">
-          <div className="w-full max-w-xl aspect-square rounded-full border-8 border-white/40 shadow-xl overflow-hidden bg-slate-100 flex items-center justify-center">
+        <div className="relative flex justify-center lg:col-span-7">
+          <div className="flex aspect-square w-full max-w-lg items-center justify-center overflow-hidden rounded-full border-4 border-white/40 bg-slate-100 shadow-xl sm:border-8 lg:max-w-xl">
 
             <img
               src="/images/image2.png"
@@ -92,10 +92,10 @@ export default function LandingPage() {
         </div>
 
       </section>
-      <section className="max-w-7xl mx-auto px-6 py-16 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-2 lg:gap-12 lg:py-16">
         {/* Left Side Image */}
         <div className="flex justify-center order-2 lg:order-1">
-          <div className="w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 shadow-lg flex items-center justify-center">
+          <div className="flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden rounded-3xl bg-slate-100 shadow-lg">
             <img 
               src="/images/food.png" 
               alt="Freshly packed food delivery" 
@@ -130,7 +130,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- SECTION 3: TESTIMONIAL / INFOBAR --- */}
-      <section className="max-w-7xl mx-auto px-6 py-16 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-2 lg:gap-12 lg:py-16">
         {/* Left Content */}
         <div className="flex flex-col space-y-6 text-center lg:text-left justify-center">
           <span className="text-4xl text-[var(--primary)] font-serif block mx-auto lg:mx-0">“</span>
@@ -149,7 +149,7 @@ export default function LandingPage() {
 
         {/* Right Skillet Image */}
         <div className="flex justify-center">
-          <div className="w-full max-w-md aspect-square rounded-3xl overflow-hidden bg-slate-100 shadow-lg flex items-center justify-center">
+          <div className="flex aspect-square w-full max-w-md items-center justify-center overflow-hidden rounded-3xl bg-slate-100 shadow-lg">
             <img 
               src="/images/pack.png" 
               alt="Food City Delivery Rider" 
@@ -162,10 +162,10 @@ export default function LandingPage() {
 
       {/* --- FOOTER / INFO GRID --- */}
       <footer className="border-t border-slate-200 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-12 lg:gap-12 lg:py-16">
           
           {/* Column 1: Links & Metadata */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="space-y-4 lg:col-span-4">
             <h3 className="font-black text-lg text-slate-900">Food City Stats</h3>
             <p className="font-bold text-slate-800 text-sm">Our Growing Community</p>
             <ul className="space-y-2 text-xs font-medium text-slate-600">
@@ -177,7 +177,7 @@ export default function LandingPage() {
           </div>
 
           {/* Column 2: Details & Socials */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="space-y-4 lg:col-span-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Our Mission</p>
               <p className="text-sm font-bold text-slate-800">Bringing the city's flavor to your table</p>
@@ -195,8 +195,8 @@ export default function LandingPage() {
           </div>
 
           {/* Column 3: Bottom Right Image Card */}
-          <div className="lg:col-span-4 flex justify-end">
-            <div className="w-full max-w-xs aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 shadow-md flex items-center justify-center">
+          <div className="flex justify-end lg:col-span-4">
+            <div className="flex aspect-[4/3] w-full max-w-xs items-center justify-center overflow-hidden rounded-2xl bg-slate-100 shadow-md">
               <img 
                 src="/images/go.png" 
                 alt="Food City Promotion" 
