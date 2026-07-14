@@ -2,6 +2,12 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { 
+  MapPin, 
+  ShoppingBag, 
+  ShieldCheck, 
+  Phone 
+} from "lucide-react";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -84,7 +90,7 @@ export default function LandingPage() {
               alt="Food City Fresh Delivery"
               className="w-full h-full object-cover"
               onError={(e) => {
-                (e.target as HTMLElement).style.display = "none";
+                (e.currentTarget as HTMLElement).style.display = "none";
               }}
             />
 
@@ -92,6 +98,8 @@ export default function LandingPage() {
         </div>
 
       </section>
+
+      {/* SECTION 2: TRACKING */}
       <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-2 lg:gap-12 lg:py-16">
         {/* Left Side Image */}
         <div className="flex justify-center order-2 lg:order-1">
@@ -100,7 +108,7 @@ export default function LandingPage() {
               src="/images/food.png" 
               alt="Freshly packed food delivery" 
               className="w-full h-full object-cover"
-              onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
           </div>
         </div>
@@ -116,22 +124,16 @@ export default function LandingPage() {
               No more guessing games. From the moment the chef starts preparing your meal until our rider rings your doorbell, you can follow your order step-by-step on our interactive live map.
             </p>
             <p>
-            
               Our dedicated delivery fleet handles your food with extreme care, ensuring everything arrives perfectly insulated, fresh, and exactly the temperature it's supposed to be.
-              
             </p>
             <p>
               Zero hassle, zero delays just premium food delivery whenever hunger strikes.
             </p>
           </div>
-          <div className="flex items-center justify-center lg:justify-start gap-4 pt-2">
-            
-            
-          </div>
         </div>
       </section>
 
-      {/* --- SECTION 3: TESTIMONIAL / INFOBAR --- */}
+      {/* SECTION 3: TESTIMONIAL / INFOBAR */}
       <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-2 lg:gap-12 lg:py-16">
         {/* Left Content */}
         <div className="flex flex-col space-y-6 text-center lg:text-left justify-center">
@@ -156,71 +158,99 @@ export default function LandingPage() {
               src="/images/pack.png" 
               alt="Food City Delivery Rider" 
               className="w-full h-full object-cover"
-              onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
           </div>
         </div>
       </section>
 
-      {/* --- FOOTER / INFO GRID --- */}
-      <footer className="border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 md:px-12 lg:grid-cols-12 lg:gap-12 lg:py-16">
-          
-          {/* Column 1: Links & Metadata */}
-          <div className="space-y-4 lg:col-span-4">
-            <h3 className="font-black text-lg text-slate-900">Food City Stats</h3>
-            <p className="font-bold text-slate-800 text-sm">Our Growing Community</p>
-            <ul className="space-y-2 text-xs font-medium text-slate-600">
-              <li className="flex items-center gap-2 text-[var(--primary)]">➔ 99.4% On-time deliveries</li>
-              <li className="flex items-center gap-2">👁️ Over 10,0+ verified restaurant partners</li>
-              <li className="flex items-center gap-2 text-amber-600">🌿 Eco-friendly packaging initiatives</li>
-              <li className="flex items-center gap-2">📍 Serving thousands of happy neighborhoods</li>
-            </ul>
-          </div>
+      {/* SECTION 4: HOW IT WORKS */}
+      <section id="features" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-900 mt-2 mb-16">
+            How FoodCity Works
+          </h2>
 
-          {/* Column 2: Details & Socials */}
-          <div className="space-y-4 lg:col-span-4">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Our Mission</p>
-              <p className="text-sm font-bold text-slate-800">Bringing the city's flavor to your table</p>
+          <div className="grid md:grid-cols-3 gap-12">
+            
+            {/* Step 1 */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--primary-soft)] flex items-center justify-center text-[var(--primary)]">
+                <MapPin size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-neutral-900">1. Set Delivery Location</h3>
+              <p className="text-neutral-500 max-w-xs">
+                Enter your address to see restaurants and meal hubs delivering to your immediate vicinity.
+              </p>
             </div>
-            <div>
-              <p className="text-xs font-bold text-[var(--primary)]">Average Delivery Time</p>
-              <p className="text-xs text-slate-500">Under 25 minutes guaranteed within central city limits.</p>
-            </div>
-            {/* Social Icons */}
-            <div className="flex items-center gap-2 pt-2">
-              <a href="#" className="w-8 h-8 rounded-md bg-slate-900 text-white flex items-center justify-center text-xs font-bold hover:opacity-80 transition-opacity">f</a>
-              <a href="#" className="w-8 h-8 rounded-md bg-slate-900 text-white flex items-center justify-center text-xs font-bold hover:opacity-80 transition-opacity">t</a>
-              <a href="#" className="w-8 h-8 rounded-md bg-slate-900 text-white flex items-center justify-center text-xs font-bold hover:opacity-80 transition-opacity">in</a>
-            </div>
-          </div>
 
-          {/* Column 3: Bottom Right Image Card */}
-          <div className="flex justify-end lg:col-span-4">
-            <div className="flex aspect-[4/3] w-full max-w-xs items-center justify-center overflow-hidden rounded-2xl bg-slate-100 shadow-md">
-              <img 
-                src="/images/go.png" 
-                alt="Food City Promotion" 
-                className="w-full h-full object-cover"
-                onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
-              />
+            {/* Step 2 */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--primary-soft)] flex items-center justify-center text-[var(--primary)]">
+                <ShoppingBag size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-neutral-900">2. Choose Your Eats</h3>
+              <p className="text-neutral-500 max-w-xs">
+                Select from local cafes, traditional spots, and dessert bars tailored to your distinct cravings.
+              </p>
             </div>
+
+            {/* Step 3 */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--primary-soft)] flex items-center justify-center text-[var(--primary)]">
+                <ShieldCheck size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-neutral-900">3. Quick Safe Delivery</h3>
+              <p className="text-neutral-500 max-w-xs">
+                Our active delivery agents courier your food warm with contact-free handoffs.
+              </p>
+            </div>
+
           </div>
         </div>
+      </section>
 
-        {/* Bottom Banner */}
-        
+      {/* FOOTER */}
+      <footer className="bg-neutral-900 text-neutral-400 py-12 border-t border-neutral-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8">
+          <div className="space-y-4">
+            <span className="text-2xl font-black tracking-tight text-white">
+              Food<span className="text-[var(--primary)]">City</span>
+            </span>
+            <p className="text-sm">
+              Your neighborhood’s top restaurants, brought to you with passion, pace, and pride.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">Our Menu</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Special Offers</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Cities Served</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Refund Center</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-4">Support</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Partner with Us</a></li>
+              <li className="flex items-center gap-1.5"><Phone size={14} /> support@foodcity.com</li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-neutral-800 text-center text-xs">
+          © {new Date().getFullYear()} FoodCity Inc. All rights reserved.
+        </div>
       </footer>
-      {/* Keep the rest of your code exactly the same */}
 
     </div>
   );
 }
-
-
-
-
-
-
-

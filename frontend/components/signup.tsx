@@ -102,7 +102,7 @@ export default function SignupForm() {
             </div>
           </div>
           <p className="max-w-prose text-base leading-relaxed text-slate-500 font-medium pt-1">
-            Create an account to access your personalized dashboard, customizable themes, and setup your profile in less than 60 seconds.
+            Create an account to access your personalized dashboard, manage your orders, and enjoy a seamless food delivery experience.
           </p>
         </div>
 
