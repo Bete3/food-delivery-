@@ -116,10 +116,12 @@ export default function LandingPage() {
               No more guessing games. From the moment the chef starts preparing your meal until our rider rings your doorbell, you can follow your order step-by-step on our interactive live map.
             </p>
             <p>
+            
               Our dedicated delivery fleet handles your food with extreme care, ensuring everything arrives perfectly insulated, fresh, and exactly the temperature it's supposed to be.
+              
             </p>
-            <p className="font-bold text-slate-900">
-              Zero hassle, zero delays—just premium food delivery whenever hunger strikes.
+            <p>
+              Zero hassle, zero delays just premium food delivery whenever hunger strikes.
             </p>
           </div>
           <div className="flex items-center justify-center lg:justify-start gap-4 pt-2">
